@@ -478,7 +478,7 @@ void initiation(){
 	}
 #endif
 
-	/////////////////////////////////////////////曲率に使用する初期情報入力////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////曲率に使用する初期情報入力///////////////////////////////////////////////////////////////////////////
 
 #if 1
 	////ある頂点に隣接しているノード番号
@@ -700,7 +700,6 @@ void initiation(){
 	//	}
 	//}
 
-    /////////
 	for (i = 0; i < num_count; i++){
 		if (node_surface2[i].edge_flag == 1){
 			if (i != 0 && i != num_count * 0.5 - 1 && i != num_count * 0.5 - side_num){
@@ -769,7 +768,7 @@ void initiation(){
 		}
 	}
 
-	///////////////////////////////////頂点に隣接している三角パッチの番号配列の初期化///////////////////////////////////
+	//////////////////////////////////////////////////////////////////////頂点に隣接している三角パッチの番号配列の初期化//////////////////////////////////////////////////////////////////////
 	for (i = 0; i < num_count; i++){
 		for (j = 0; j < 6; j++){
 			node_surface2[i].T[j] = 0;
@@ -1007,7 +1006,7 @@ void initiation(){
 			}
 		}
 	}
-
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 #endif
 	for (i = 0; i <= num_count - 1; i++){
@@ -1048,7 +1047,6 @@ void initiation(){
 			pow((node_surface2[triangle_data[i].t[0]].pos.x[2] - node_surface2[triangle_data[i].t[2]].pos.x[2]), 2.0));
 	}
 }
-
 void node_simulation(int view_con){
 	if (first_count == 1){
 		initiation();
@@ -1256,7 +1254,7 @@ void node_simulation(int view_con){
 			}
 		}
 		//printf("thickness = %f\n", max + abs(min));
-		/// normal mean
+		/////////////////////////////////////////////////////////////////曲率計算過程////////////////////////////////////////////////////////////////////////////////////////////////
 #if 1
 		double P0P1[3];
 		double P0P2[3];
@@ -1521,6 +1519,8 @@ void node_simulation(int view_con){
 #endif
 		//printf("%lf, %lf, %lf\n", node_surface2[30].pos.x[0], node_surface2[41].pos.x[1], node_surface2[43].pos.x[2]);
 #endif
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		//for (i = 0; i < num_count; i++){
 		//	glPushMatrix();
 		//	glColor3d(0.0, 1.0, 1.0);
@@ -1545,10 +1545,12 @@ void node_simulation(int view_con){
 			}
 		}
 
-		///////////////////////////曲率マップのグラデーションの範囲/////////////////////////////
+		//////////////////////////////////////////////////////////////曲率マップのグラデーションの範囲////////////////////////////////////////////////////////////////
+
+		//曲率値の範囲を変えると曲率マップの色のグラデーションが変わる。
 		double min_g = -0.025;
 		double max_g = 0.0625;
-		//////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		for (i = 0; i < num_count; i++){
 			glPushMatrix();
@@ -1628,11 +1630,6 @@ void node_simulation(int view_con){
 						glColor3d(((node_surface2[triangle_data[i].t[j]].K) - (max_g + min_g) / 2.0) / ((max_g + min_g) / 2 - min_g), 0.0, (max_g - (node_surface2[triangle_data[i].t[j]].K)) / ((max_g + min_g) / 2.0 - min_g));
 						glVertex3d(node_surface2[triangle_data[i].t[j]].pos.x[0], node_surface2[triangle_data[i].t[j]].pos.x[2], node_surface2[triangle_data[i].t[j]].pos.x[1]);
 					}
-					//if (node_surface2[triangle_data[i].t[j]].K == 0){
-					//	glColor3d(0.0, 1.0, 0.0);
-					//	//glColor3d(0.0 + node_surface2[triangle_data[i].t[j]].K * 0.05, 1.0 - node_surface2[triangle_data[i].t[j]].K * 0.05, 1.0 - node_surface2[triangle_data[i].t[j]].K * 0.05);
-					//	glVertex3d(node_surface2[triangle_data[i].t[j]].pos.x[0], node_surface2[triangle_data[i].t[j]].pos.x[2], node_surface2[triangle_data[i].t[j]].pos.x[1]);
-					//}
 				}
 			}
 			glEnd();
